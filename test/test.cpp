@@ -1,8 +1,6 @@
 #include <iostream>
 #include <sstream>
 
-#include <zmq.hpp>
-
 #include "subscriber.h"
 #include "message.h"
 #include "poller.h"

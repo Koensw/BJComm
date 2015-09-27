@@ -21,7 +21,7 @@ bool Subscriber::start(){
     
     //try to bind socket and set options
     try{
-        _socket->bind(_address);
+        _socket->bind(_address.c_str());
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);

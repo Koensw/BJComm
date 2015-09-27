@@ -21,7 +21,7 @@ bool Publisher::start(){
     
     //try to connect to socket
     try{
-        _socket->connect(_address);
+        _socket->connect(_address.c_str());
     }catch(zmq::error_t &e){
         delete _socket;
         _socket = 0;
