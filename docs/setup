@@ -1,0 +1,20 @@
+Subscriber
+- start: try to bind a port (return false when not possible to bind a port?)
+- stop: unbinds port
+- receive(): blocking call to read next message
+
+Publisher
+- start: blocking connect to a port
+- stop: stop publishing
+- send(): sends a message
+
+ServiceReplyer (??)
+Message
+-> getType()
+-> getString()
+-> getInputStream()
+-> getOutputStream()    
+-> clear()
+
+
+SubscribeServicePoller
