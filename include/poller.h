@@ -7,12 +7,18 @@
 
 class Poller{
 public:
+    Poller();
+    ~Poller();
+    
     int add(CommunicationInterface *);
     //TODO: add remove...
     
-    int poll();
+    void poll();
+    bool hasMsg(int);
 private:
     std::vector<CommunicationInterface*> _interfaces;
+    
+    zmq::pollitem_t *_items;
 };
 
 #endif

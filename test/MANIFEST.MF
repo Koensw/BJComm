@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: /home/koen/bluejay/sitl/test_ws/src/BJComm/build/bjcomm.jar
+Main-Class: Test

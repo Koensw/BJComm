@@ -11,11 +11,11 @@ class CommunicationInterface{
 public:
     CommunicationInterface();
     virtual ~CommunicationInterface(){
-        if(_state) stop();
+        if(_running) stop();
     }
     
     bool isRunning(){
-        return _state;
+        return _running;
     }
     virtual bool start() = 0;
     virtual bool stop();
@@ -25,7 +25,7 @@ protected:
     CommunicationInterface(CommunicationInterface const&);              
     void operator=(CommunicationInterface const&);
     
-    bool _state;
+    bool _running;
     
     //TODO: support sharing contexts
     zmq::context_t _context;

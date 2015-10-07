@@ -14,29 +14,25 @@ int main(){
     std::cout << "Started " << ret << std::endl;
     
     Poller poller;
-    const int SUBSCRIBER = 0;
-    poller.add(&sub);
+    int SUBSCRIBER = poller.add(&sub);
     
     
     while(true){
-        int type = poller.poll();
+        poller.poll();        
         
-        Message msg;
-        
-        switch(type){
-            case SUBSCRIBER:
-                msg = sub.receive();
-        
-                if(msg.getType() == "position"){
-                    int x, y, z;
-                    msg.getStream() >> x >> y >> z;
-                    std::cout << "Set position to (" << x << "," << y << "," << z << ")" << std::endl;
-                }else{
-                    std::cout << "INCORRECT MESSAGE" << std::endl;
-                }
-                break;
-            default:
-                std::cout << "INCORRECT POLL" << std::endl;
+        if(poller.hasMsg(SUBSCRIBER)){
+            Message msg;
+            msg = sub.receive();
+    
+            if(msg.getType() == "position"){
+                int x, y, z;
+                msg.getStream() >> x >> y >> z;
+                std::cout << "Set position to (" << x << "," << y << "," << z << ")" << std::endl;
+            }else{
+                std::cout << "INCORRECT MESSAGE" << std::endl;
+            }
+        }else{
+            std::cout << "INCORRECT POLL" << std::endl;
         }
     }
 }

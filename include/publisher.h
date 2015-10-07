@@ -2,7 +2,6 @@
 #define _BLUEJAY_SUBSCRIBER_H
 
 #include <string>
-#include <zmq.hpp>
 
 #include "interface.h"
 #include "message.h"

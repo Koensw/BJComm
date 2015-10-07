@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: /usr/local/share/java/zmq.jar
+Main-Class: nl.bluejayeindhoven.bjcomm.CommunicationInterface
