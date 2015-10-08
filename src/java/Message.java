@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Data class that contains a message with a type that can be send and received
  *
- * <p>This class makes sure that the message follow the defined format
+ * <p>This class makes sure that a message follows the defined format
  * A message should start with an non-empty string (printable ASCII) that defines the type (default if not set).
  * Then comes one space followed by any non-space character that starts the data. The end of the data is a printable character</p>
  *
