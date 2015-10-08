@@ -7,7 +7,7 @@ CommunicationInterface::CommunicationInterface():
 {}
 
 bool CommunicationInterface::stop(){
-    //do not do anything if already closed (ALERT: should not happen)
+    //do not do anything if already closed
     if(!_running) return false;
     
     //close the socket

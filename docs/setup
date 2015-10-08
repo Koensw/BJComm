@@ -18,3 +18,13 @@ Message
 
 
 SubscribeServicePoller
+
+----------------------
+TODO
+* add exceptions (and look at exception safety)
+* specify what each interface should provide
+* add documentation (at least basic)
+* test on pi
+* add simple debug logger (registers everything)
+* add service listener
+* add simple unit tests

@@ -6,13 +6,15 @@
 #include <zmq.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include "error.h"
+
 using namespace boost::algorithm;
 
 Subscriber::Subscriber(std::string address): 
     _address(address) {}
     
 bool Subscriber::start(){
-    //if already started return (ALERT: should not happen)
+    //if already started return
     if(_running) return false;
     
     _socket = new zmq::socket_t (_context, ZMQ_SUB);
@@ -35,8 +37,8 @@ bool Subscriber::start(){
 }
 
 Message Subscriber::receive(){
-    //wait forever if no socket started (ALERT: should not happen)
-    while(!_running) std::this_thread::sleep_for(std::chrono::seconds(1));
+    //throw exception if trying to receive message on closed channel
+    if(!_running) throw CommunicationError("Trying to receive message on channel that is not running!");
         
     //block read message
     zmq::message_t zmq_msg;

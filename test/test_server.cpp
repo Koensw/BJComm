@@ -10,6 +10,7 @@
 #include "publisher.h"
 #include "message.h"
 
+/* Test of a default publisher client */
 int main(){
     Publisher pub("tcp://localhost:5556");
     bool ret = pub.start();

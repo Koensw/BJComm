@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015 Blue Jay Eindhoven
+ */
+
 #ifndef _BLUEJAY_COMMUNICATION_INTERFACE_H
 #define _BLUEJAY_COMMUNICATION_INTERFACE_H
 
@@ -6,17 +10,23 @@
 #include <string>
 #include <zmq.hpp>
 
+/* Base class for communication interfaces s*/
 class CommunicationInterface{
     friend class Poller;
 public:
+    /* Construct and destruct interface */
     CommunicationInterface();
     virtual ~CommunicationInterface(){
-        if(_running) stop();
+        //try to stop interface
+        stop();
     }
     
+    /* Return if interface is running */
     bool isRunning(){
         return _running;
     }
+    
+    /* Start and stop interface */
     virtual bool start() = 0;
     virtual bool stop();
     

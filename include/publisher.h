@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015 Blue Jay Eindhoven
+ */
+
 #ifndef _BLUEJAY_SUBSCRIBER_H
 #define _BLUEJAY_SUBSCRIBER_H
 
@@ -6,16 +10,17 @@
 #include "interface.h"
 #include "message.h"
 
-//WARNING: not thread-safe on its own
+/* Interface that sends data over asynchronous channel */
 class Publisher: public CommunicationInterface{
 public:
+    /* Construct a publisher */
     Publisher(std::string address);
     
+    /* Try to start the interface */
     bool start();
     
+    /* Send a message */
     void send(Message &msg);
-    
-    //TODO: add(Debug)Address(string) - add extra address to write to (useful for debugging) 
 private:
     std::string _address;
 };

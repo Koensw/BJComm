@@ -3,6 +3,7 @@ import java.util.concurrent.TimeUnit;
 
 import nl.bluejayeindhoven.bjcomm.*;
 
+/* Test of a default publisher client */
 class TestServer
 {
     public static void main (String [] args)

@@ -2,11 +2,13 @@ import java.util.Scanner;
 
 import nl.bluejayeindhoven.bjcomm.*;
 
+/* Test of a default subscriber client */
 class Test
 {
     public static void main (String [] args)
     {
         Subscriber sub = new Subscriber("tcp://*:5556");
+        
         boolean ret = sub.start();
         
         System.out.print("Started ");

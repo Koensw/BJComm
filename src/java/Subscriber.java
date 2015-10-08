@@ -1,20 +1,41 @@
+/*
+ * Copyright (c) 2015 Blue Jay Eindhoven
+ */
 package nl.bluejayeindhoven.bjcomm;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
-import java.util.concurrent.TimeUnit;
 import java.nio.charset.StandardCharsets;
 
-
 import nl.bluejayeindhoven.bjcomm.Message;
+import nl.bluejayeindhoven.bjcomm.CommunicationError;
 
+/**
+ * Interface that subscribes to all messages on a socket it binds
+ *
+ * @see Publisher
+ * @author Koen Wolters
+ */
 public class Subscriber extends CommunicationInterface{
+    /**
+     * Address of the socket
+     */
     private String address;
     
+    /**
+     * Constructs a subscriber that shall communicate over the supplied address
+     *
+     * @param address address of the socket
+     */
     public Subscriber(String address){
         this.address = address;
     }
     
+    /**
+     * {@inheritDoc}
+     *
+     * Creates a socket, bind the address and subscribe to all channels
+     */
     public boolean start(){
         //if already started return false (ALERT: should not happen)
         if(running) return false;
@@ -36,15 +57,16 @@ public class Subscriber extends CommunicationInterface{
         return true;
     }
     
+    /**
+     * Receive a message over the channel. Blocks until message is received.
+     *
+     * @return msg message that is received on the channel
+     *
+     * @throws CommunicationError if interface is not started
+     */
     public Message receive(){
-        while(!running) {
-            //wait forever if no socket is started (FIXME: we should just throw an exception ?)
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+        //throw exception if trying to receive message on closed channel
+        if(!running) throw new CommunicationError("Trying to receive message on channel that is not running!");
         
         //read type and data
         String str = socket.recvStr(StandardCharsets.US_ASCII);

@@ -14,18 +14,20 @@ Message::Message(std::string type):
     _type(type), _data("") 
 {
     trim(_type);
+    if(_type.empty()) _type = "default";
 }
 
 Message::Message(std::string type, std::string data): 
     _type(type), _data(data)
 {
     trim(_type);
+    if(_type.empty()) _type = "default";
     trim(_data);
 }
     
 void Message::setType(std::string type){
-    if(type.empty()) type = "default";
     trim(type);
+    if(type.empty()) type = "default";
     _type = type;
 }
 

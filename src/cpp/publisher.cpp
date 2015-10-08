@@ -6,13 +6,15 @@
 #include <zmq.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include "error.h"
+
 using namespace boost::algorithm;
 
 Publisher::Publisher(std::string address): 
     _address(address) {}
     
 bool Publisher::start(){
-    //if already started return (ALERT: should not happen)
+    //if already started return
     if(_running) return false;
     
     _socket = new zmq::socket_t (_context, ZMQ_PUB);
@@ -32,8 +34,8 @@ bool Publisher::start(){
 }
 
 void Publisher::send(Message &msg){
-    //wait forever if no socket started (ALERT: should not happen)
-    while(!_running) std::this_thread::sleep_for(std::chrono::seconds(1));
+    //throw exception if trying to publish on closed channel
+    if(!_running) throw CommunicationError("Trying to send message on channel that is not running!");
         
     //get message
     std::string str = msg.getType()+" "+msg.getData();

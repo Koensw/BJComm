@@ -1,0 +1,40 @@
+-- DEFINES MINIMUM REQUIREMENTS FOR INTERFACE --
+
+SHALL FOLLOW LANGUAGE CONVENTIONS WHEN POSSIBLE
+SHOULD BE SIMILAR TO THE JAVA REFERENCE WHENEVER POSSIBLE
+
+JAVA INTERFACE SHALL BE EXTENSIVELY DOCUMENTED
+ALL OTHER INTERFACES SHOULD CONTAIN BASIC DOCUMENTATION
+
+SHALL PROVIDE:
+* Message
+- setter/getter for setData to set the data to be sent
+- setter/getter for type of message (guarentees that type is never an empty string by setting a default type of 'default')
+- clear method to clear the data
+
+* CommunicationInterface
+- shallow copying or prevent copying if this is unclear behaviour
+- isRunning method that will be true if the interface is in a good state and the socket can be read
+- all children ensure the protected running variable is set correctly
+
+* Subscriber
+- start method that bind a channel and subscribes on all messages
+- receive method that reads a message from the channel (blocks until a message is received)
+
+* Publisher
+- start method that connects to a channel where messages can be published
+- send method that sends a message over the channel (throws messages away if there are no subscribers)
+
+* Poller
+- add method to add an interface that needs to be polled (returns a integer that identifies this interface); polling a publisher is undefined
+- poll method that should block until a message is received
+- hasMsg method that shall return true if the passed identifier has a message to read
+
+* CommunicationError
+- only throw if something happen that should be impossible (example: reading from an interface that is not started) or very unlikely (example: protocol error in the ZMQ layer)
+- prevent this when possible, prefer returning status codes when appropiate
+- contains a description off the error
+
+SHOULD PROVIDE
+* Message
+- convenience methods that makes parsing and setting the data easier (dependant on language)

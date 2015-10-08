@@ -7,6 +7,7 @@
 #include "message.h"
 #include "poller.h"
 
+/* Test of a default subscriber client */
 int main(){
     Subscriber sub("tcp://*:5556");
     bool ret = sub.start();

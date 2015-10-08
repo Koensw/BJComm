@@ -1,6 +1,9 @@
 #include "poller.h"
 
 #include <zmq.hpp>
+#include <stdexcept>
+
+#include "error.h"
 
 Poller::Poller(): _items(nullptr) {}
 Poller::~Poller() {
@@ -8,6 +11,7 @@ Poller::~Poller() {
 }
 
 int Poller::add(CommunicationInterface *interface){
+    if(!interface->isRunning()) return -1;
     _interfaces.push_back(interface);
     return _interfaces.size()-1;
 }
@@ -16,12 +20,15 @@ int Poller::add(CommunicationInterface *interface){
 void Poller::poll(){
     delete[] _items;
     
+    //check if interfaces are added
+    if(_interfaces.empty()) throw CommunicationError("Polling without any interfaces added!");
+    
     _items = new zmq::pollitem_t[_interfaces.size()];
     for(size_t i=0; i<_interfaces.size(); ++i){
         //return if some interface is not running (this causes busy waiting...)
         if(!_interfaces[i]->isRunning()){
             delete[] _items;
-            return;
+            throw CommunicationError("Polling on a channel that is not running!");
         }
         _items[i] = {(void *) *(_interfaces[i]->_socket), 0, ZMQ_POLLIN, 0 };
     }
@@ -30,8 +37,9 @@ void Poller::poll(){
 }
 
 bool Poller::hasMsg(int id){
-    //if no poll before return (ALERT: should not be possible, throw error?)
-    if(_items == nullptr) return false;
+    //if no poll or invalid id throw error
+    if(id < 0 || id >= (int) _interfaces.size()) throw std::invalid_argument("Checking for message of an invalid identifier!");
+    else if(_items == nullptr) throw std::logic_error("Checking for a message before poller is called!");
     
     return _items[id].revents & ZMQ_POLLIN;
     

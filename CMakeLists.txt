@@ -32,7 +32,8 @@ add_jar(bjcomm_java
     src/java/Subscriber.java
     src/java/Publisher.java
     src/java/Poller.java
-    MANIFEST 
+    src/java/CommunicationError.java
+    MANIFEST
     ${CMAKE_SOURCE_DIR}/src/java/MANIFEST.MF
     OUTPUT_NAME
     bjcomm
@@ -57,6 +58,20 @@ add_jar(comm_test_server_java
     test/TestServer.java
     INCLUDE_JARS
     bjcomm_java
+)
+
+# (re)build docs
+create_javadoc(bjcomm_docs
+    FILES 
+    src/java/CommunicationInterface.java
+    src/java/Message.java
+    src/java/Subscriber.java
+    src/java/Publisher.java
+    src/java/Poller.java
+    src/java/CommunicationError.java
+    SOURCEPATH "${CMAKE_CURRENT_SOURCE_DIR}/src/java/"
+    CLASSPATH "${CMAKE_JAVA_INCLUDE_PATH}"
+    INSTALLPATH "${CMAKE_CURRENT_BINARY_DIR}/"
 )
 
 # MANIFEST ${CMAKE_SOURCE_DIR}/test/MANIFEST.MF
