@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 2.8.9)
 project(bjcomm)
 
-# add java support
+# load required packages
 find_package(Java REQUIRED)
+find_package(Boost COMPONENTS system filesystem unit_test_framework REQUIRED)
 include(UseJava)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
@@ -20,6 +21,8 @@ endif ()
 # set compiler and flags
 set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -pedantic --std=c++11 ${CMAKE_CXX_FLAGS}")
 set(CMAKE_JAVA_COMPILE_FLAGS "-Xlint")
+
+#### BUILD ####
 
 # include the headers
 include_directories(include/)
@@ -51,29 +54,49 @@ add_jar(bjcomm_java
     bjcomm
 )
 
-# tests
-add_executable(comm_test
-    test/test.cpp
+#### TEST ####
+# build examples
+add_executable(cpp_sub_example
+    docs/examples/test.cpp
 )
-target_link_libraries(comm_test bjcomm)
+target_link_libraries(cpp_sub_example bjcomm)
 
-add_executable(comm_test_server
-    test/test_server.cpp
+add_executable(cpp_pub_example
+    docs/examples/test_server.cpp
 )
-target_link_libraries(comm_test_server bjcomm)
+target_link_libraries(cpp_pub_example bjcomm)
 
-add_jar(comm_test_java
+add_jar(java_sub_example
     SOURCES
-    test/Test.java
+    docs/examples/Test.java
     INCLUDE_JARS
     bjcomm_java
 )
-add_jar(comm_test_server_java
+add_jar(java_pub_example
     SOURCES
-    test/TestServer.java
+    docs/examples/TestServer.java
     INCLUDE_JARS
     bjcomm_java
 )
+
+# build unit tests
+function(add_cpp_test target)
+    add_executable(${target} ${ARGN})
+    target_link_libraries(${target} 
+                      ${Boost_FILESYSTEM_LIBRARY}
+                      ${Boost_SYSTEM_LIBRARY}
+                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+                      bjcomm)
+
+    add_test(${target} ${target})
+endfunction()
+
+enable_testing()
+add_definitions(-DBOOST_TEST_DYN_LINK) 
+add_cpp_test(message_test test/message.cpp)
+add_cpp_test(subscriber_test test/subscriber.cpp)
+add_cpp_test(publisher_test test/publisher.cpp)
+add_cpp_test(poller_test test/poller.cpp)
 
 # (re)build docs
 create_javadoc(bjcomm_docs

@@ -32,8 +32,8 @@ public:
     
 protected:
     /* PREVENT COPY */
-    CommunicationInterface(CommunicationInterface const&);              
-    void operator=(CommunicationInterface const&);
+    CommunicationInterface(CommunicationInterface const&) = delete;          
+    void operator=(CommunicationInterface const&) = delete;
     
     bool _running;
     

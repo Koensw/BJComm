@@ -27,4 +27,4 @@ TODO
 * test on pi
 * add simple debug logger (registers everything)
 * add service listener
-* add simple unit tests
+* add java unit tests

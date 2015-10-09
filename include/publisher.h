@@ -2,8 +2,8 @@
  * Copyright (c) 2015 Blue Jay Eindhoven
  */
 
-#ifndef _BLUEJAY_SUBSCRIBER_H
-#define _BLUEJAY_SUBSCRIBER_H
+#ifndef _BLUEJAY_PUBLISHER_H
+#define _BLUEJAY_PUBLISHER_H
 
 #include <string>
 
