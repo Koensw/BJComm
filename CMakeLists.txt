@@ -15,7 +15,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
 elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 else ()
-    message(FATAL_ERROR "Your C++ compiler does not support C++11.")
+    message(FATAL_ERROR "C++ compiler does not support C++11.")
 endif ()
 
 # set compiler and flags
@@ -111,3 +111,11 @@ create_javadoc(bjcomm_docs
     CLASSPATH "${CMAKE_JAVA_INCLUDE_PATH}"
     INSTALLPATH "${CMAKE_CURRENT_BINARY_DIR}/"
 )
+
+#### INSTALL ####
+install(TARGETS bjcomm
+        RUNTIME DESTINATION /usr/local/bin
+        LIBRARY DESTINATION /usr/local/lib
+        ARCHIVE DESTINATION /usr/local/lib/static)
+install(DIRECTORY include/ DESTINATION /usr/local/include/bjcomm)
+install_jar(bjcomm_java /usr/local/share/java/)

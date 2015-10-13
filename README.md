@@ -16,4 +16,4 @@ To install the libraries and bindings the following steps are needed
 * add simple debug logger (registers everything)
 * add service listener
 * add java unit tests
-* create auto build scripte
+* create auto build scripts
