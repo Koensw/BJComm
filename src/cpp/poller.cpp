@@ -5,6 +5,8 @@
 
 #include "error.h"
 
+using namespace bjcomm;
+
 Poller::Poller(): _items(nullptr) {}
 Poller::~Poller() {
     delete[] _items;

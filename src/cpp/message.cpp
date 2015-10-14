@@ -5,6 +5,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+using namespace bjcomm;
 using namespace boost::algorithm;
 
 Message::Message():

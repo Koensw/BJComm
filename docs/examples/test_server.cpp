@@ -10,6 +10,8 @@
 #include "publisher.h"
 #include "message.h"
 
+using namespace bjcomm;
+
 /* Test of a default publisher client */
 int main(){
     Publisher pub("tcp://localhost:5556");

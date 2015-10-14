@@ -3,6 +3,8 @@
 
 #include "message.h"
 
+using namespace bjcomm;
+
 BOOST_AUTO_TEST_CASE( constructor_test ){
     Message msg;
     BOOST_CHECK_EQUAL(msg.getType(), "default");

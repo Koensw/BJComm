@@ -8,6 +8,7 @@
 
 #include "error.h"
 
+using namespace bjcomm;
 using namespace boost::algorithm;
 
 Publisher::Publisher(std::string address): 

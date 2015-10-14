@@ -8,6 +8,7 @@
 
 #include "error.h"
 
+using namespace bjcomm;
 using namespace boost::algorithm;
 
 Subscriber::Subscriber(std::string address): 

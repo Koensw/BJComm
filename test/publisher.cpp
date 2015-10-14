@@ -5,6 +5,7 @@
 #include "error.h"
 #include "publisher.h"
 
+using namespace bjcomm;
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( error_test ){

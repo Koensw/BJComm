@@ -1,5 +1,7 @@
 #include "interface.h"
 
+using namespace bjcomm;
+
 CommunicationInterface::CommunicationInterface():
     _running(false),
     _context(BJCOMM_IO_THREADS),
