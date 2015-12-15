@@ -35,7 +35,7 @@ void Poller::poll(){
         _items[i] = {(void *) *(_interfaces[i]->_socket), 0, ZMQ_POLLIN, 0 };
     }
 
-    zmq::poll (_items, _interfaces.size());
+    zmq::poll (_items, _interfaces.size(), -1);
 }
 
 bool Poller::hasMsg(int id){
