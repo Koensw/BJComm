@@ -6,6 +6,10 @@
 #include <zmq.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include <sys/stat.h>
+#include <libgen.h>
+#include <stdio.h>
+
 #include "error.h"
 
 using namespace bjcomm;
@@ -22,12 +26,19 @@ bool Subscriber::start(){
     
     //try to bind socket and set options
     try{
-        _socket->bind(_address.c_str());
+        //create path to directory (and ONE subdirectory) if does not exists
+        mkdir(BJCOMM_COMMON_PATH.c_str(), S_IRWXU | S_IRWXG | S_IXOTH);
+        std::string address = _address;
+        std::string total_path = BJCOMM_COMMON_PATH+dirname((char *) address.c_str());
+        mkdir(total_path.c_str(), S_IRWXU | S_IRWXG | S_IXOTH);
+        
+        //bind socket
+        _socket->bind(("ipc://"+BJCOMM_COMMON_PATH+_address).c_str());
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);
     }catch(zmq::error_t &e){
-        delete _socket;
+        //delete _socket;
         _socket = 0;
         
         return false;

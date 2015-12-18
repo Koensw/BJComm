@@ -27,7 +27,7 @@ public class Publisher extends CommunicationInterface{
      * @param address address of the socket
      */
     public Publisher(String address){
-        this.address = address;
+        this.address = COMMON_PATH+address;
     }
     
     /**

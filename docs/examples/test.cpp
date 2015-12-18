@@ -9,7 +9,7 @@ using namespace bjcomm;
 
 /* Test of a default subscriber client */
 int main(){
-    Subscriber sub("tcp://*:5556");
+    Subscriber sub("test/test_cpp");
     bool ret = sub.start();
     
     std::cout << "Started " << ret << std::endl;

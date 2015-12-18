@@ -10,7 +10,7 @@ using namespace bjcomm;
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( error_test ){
-    Subscriber sub("tcp://*:8888");
+    Subscriber sub("test/subscriber_test");
     
     BOOST_CHECK_EQUAL(sub.isRunning(), false);
     BOOST_CHECK_EQUAL(sub.stop(), false); 
@@ -33,8 +33,8 @@ bool check_receive(Subscriber *sub, std::string type, std::string data){
 }
 
 BOOST_AUTO_TEST_CASE( read_test){
-    Publisher pub("tcp://localhost:8888");
-    Subscriber sub("tcp://*:8888");
+    Publisher pub("test/subscriber_test");
+    Subscriber sub("test/subscriber_test");
     
     pub.start();
     sub.start();
