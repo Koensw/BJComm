@@ -38,7 +38,7 @@ bool Subscriber::start(){
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);
     }catch(zmq::error_t &e){
-        //delete _socket;
+        delete _socket;
         _socket = 0;
         
         return false;
