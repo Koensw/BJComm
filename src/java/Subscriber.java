@@ -30,7 +30,7 @@ public class Subscriber extends CommunicationInterface{
      * @param address address of the channel
      */
     public Subscriber(String address){
-        this.address = COMMON_PATH+address;
+        this.address = address;
     }
     
     /**
@@ -47,7 +47,7 @@ public class Subscriber extends CommunicationInterface{
         try{
             //create file if not exists
             File file = new File(COMMON_PATH+address);
-            file.mkdirs();
+            file.getParentFile().mkdirs();
         
             //bind socket
             socket.bind("ipc://"+COMMON_PATH+address);
