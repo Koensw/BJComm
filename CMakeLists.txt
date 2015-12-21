@@ -38,8 +38,7 @@ add_library(bjcomm SHARED
 target_link_libraries(bjcomm ${Boost_FILESYSTEM_LIBRARY} zmq)
 
 # communication bindings for java
-# set(CMAKE_JAVA_INCLUDE_PATH /usr/local/share/java/zmq.jar)
-set(CMAKE_JAVA_INCLUDE_PATH "/usr/local/share/java/zmq.jar:${CMAKE_CURRENT_BINARY_DIR}/bjcomm_java.jar")
+set(CMAKE_JAVA_INCLUDE_PATH /usr/local/share/java/zmq.jar)
 add_jar(bjcomm_java
     SOURCES
     src/java/CommunicationInterface.java
@@ -50,6 +49,8 @@ add_jar(bjcomm_java
     src/java/CommunicationError.java
     MANIFEST
     ${CMAKE_SOURCE_DIR}/src/java/MANIFEST.MF
+#    INCLUDE_JARS
+#    zmq_java
     OUTPUT_NAME
     bjcomm
 )
