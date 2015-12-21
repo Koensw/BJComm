@@ -7,7 +7,13 @@
 
 using namespace bjcomm;
 
-Poller::Poller(): _items(nullptr) {}
+Poller::Poller(): _items(nullptr) {
+    //initialize pipe for interrupt handling
+    pipe(_pipefds);
+    int flags = fcntl(_pipefds[0], F_GETFL, 0);
+    fcntl (_pipefds[0], F_SETFL, flags | O_NONBLOCK);
+    
+}
 Poller::~Poller() {
     delete[] _items;
 }
@@ -25,7 +31,7 @@ void Poller::poll(){
     //check if interfaces are added
     if(_interfaces.empty()) throw CommunicationError("Polling without any interfaces added!");
     
-    _items = new zmq::pollitem_t[_interfaces.size()];
+    _items = new zmq::pollitem_t[_interfaces.size()+1];
     for(size_t i=0; i<_interfaces.size(); ++i){
         //return if some interface is not running (this causes busy waiting...)
         if(!_interfaces[i]->isRunning()){
@@ -34,8 +40,13 @@ void Poller::poll(){
         }
         _items[i] = {(void *) *(_interfaces[i]->_socket), 0, ZMQ_POLLIN, 0 };
     }
+    _items[_interfaces.size()] =  {0, _pipefds[0], ZMQ_POLLIN, 0 };
 
-    zmq::poll (_items, _interfaces.size(), -1);
+    zmq::poll (_items, _interfaces.size()+1, -1);
+}
+
+void Poller::interrupt(){
+    write (_pipefds[1], " ", sizeof(" "));
 }
 
 bool Poller::hasMsg(int id){
