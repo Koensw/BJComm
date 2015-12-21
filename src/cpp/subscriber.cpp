@@ -34,11 +34,14 @@ bool Subscriber::start(){
         
         //bind socket
         _socket->bind(("ipc://"+comm_path.string()).c_str());
+        
+        //set permissions
+        permissions(comm_path, perms::owner_all | perms::group_all | perms::others_all);
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);
     }catch(zmq::error_t &e){
-        delete _socket;
+        //delete _socket;
         _socket = 0;
         
         return false;

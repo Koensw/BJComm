@@ -46,10 +46,14 @@ public class Subscriber extends CommunicationInterface{
         
         try{
             //create file if not exists
-            new File(COMMON_PATH+address).mkdirs();
+            File file = new File(COMMON_PATH+address);
+            file.mkdirs();
         
             //bind socket
             socket.bind("ipc://"+COMMON_PATH+address);
+            file.setReadable(true, false);
+            file.setWritable(true, false);
+            file.setExecutable(true, false);
             
             //FIXME: currently binding to all sockets
             socket.subscribe(new byte[0]);
