@@ -3,9 +3,11 @@
  */
 package nl.bluejayeindhoven.bjcomm;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
-import java.nio.charset.StandardCharsets;
 
 import nl.bluejayeindhoven.bjcomm.Message;
 import nl.bluejayeindhoven.bjcomm.CommunicationError;
@@ -25,10 +27,10 @@ public class Subscriber extends CommunicationInterface{
     /**
      * Constructs a subscriber that shall communicate over the supplied address
      *
-     * @param address address of the socket
+     * @param address address of the channel
      */
     public Subscriber(String address){
-        this.address = address;
+        this.address = COMMON_PATH+address;
     }
     
     /**
@@ -43,7 +45,11 @@ public class Subscriber extends CommunicationInterface{
         socket = context.socket(ZMQ.SUB);
         
         try{
-            socket.bind(address);
+            //create file if not exists
+            new File(COMMON_PATH+address).mkdirs();
+        
+            //bind socket
+            socket.bind("ipc://"+COMMON_PATH+address);
             
             //FIXME: currently binding to all sockets
             socket.subscribe(new byte[0]);

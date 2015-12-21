@@ -9,7 +9,7 @@ using namespace bjcomm;
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( error_test ){
-    Publisher pub("tcp://localhost:8888");
+    Publisher pub("test/publisher_test");
     
     BOOST_CHECK_EQUAL(pub.isRunning(), false);
     BOOST_CHECK_EQUAL(pub.stop(), false); 
@@ -34,7 +34,7 @@ bool check_send(Publisher *pub){
 }
 
 BOOST_AUTO_TEST_CASE( send_test){
-    Publisher pub("tcp://localhost:8888");
+    Publisher pub("test/publisher_test");
     
     pub.start();    
     unit_test_monitor_t& monitor = unit_test_monitor_t::instance();

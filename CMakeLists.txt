@@ -35,7 +35,7 @@ add_library(bjcomm SHARED
     src/cpp/publisher.cpp
     src/cpp/poller.cpp
 )
-target_link_libraries(bjcomm zmq)
+target_link_libraries(bjcomm ${Boost_FILESYSTEM_LIBRARY} zmq)
 
 # communication bindings for java
 # set(CMAKE_JAVA_INCLUDE_PATH /usr/local/share/java/zmq.jar)

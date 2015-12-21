@@ -5,11 +5,17 @@
 
 #include <zmq.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+
+#include <sys/stat.h>
+#include <libgen.h>
+#include <stdio.h>
 
 #include "error.h"
 
 using namespace bjcomm;
 using namespace boost::algorithm;
+using namespace boost::filesystem;
 
 Subscriber::Subscriber(std::string address): 
     _address(address) {}
@@ -22,7 +28,12 @@ bool Subscriber::start(){
     
     //try to bind socket and set options
     try{
-        _socket->bind(_address.c_str());
+        //create path to directory if does not exists
+        path comm_path(BJCOMM_COMMON_PATH+_address);
+        create_directories(comm_path.parent_path());
+        
+        //bind socket
+        _socket->bind(("ipc://"+comm_path.string()).c_str());
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);

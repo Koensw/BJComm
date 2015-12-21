@@ -14,7 +14,7 @@ using namespace bjcomm;
 
 /* Test of a default publisher client */
 int main(){
-    Publisher pub("tcp://localhost:5556");
+    Publisher pub("test/test_cpp");
     bool ret = pub.start();
     std::cout << "Started " << ret << std::endl;
     

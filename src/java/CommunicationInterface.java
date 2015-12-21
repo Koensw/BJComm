@@ -21,6 +21,7 @@ public abstract class CommunicationInterface{
      * In normal cases using more than one thread will not increase performance.
      */
     public static final int IO_THREADS = 1;
+    public static final String COMMON_PATH = "/tmp/bluejay/";
 
     /**
      * The context of ZMQ to access other objects. This class will ensure that this object is available 

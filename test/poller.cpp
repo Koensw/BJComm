@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_CASE( error_test ){
     BOOST_CHECK_THROW(poll.poll(), CommunicationError);
     BOOST_CHECK_THROW(poll.hasMsg(-1), std::invalid_argument);
     
-    Subscriber sub("tcp://*:8888");
+    Subscriber sub("test/poller_test");
     BOOST_CHECK_EQUAL(poll.add(&sub), -1);
     sub.start();
     int nm = poll.add(&sub);
@@ -30,8 +30,8 @@ bool check_poll(Poller *poll, int id){
 }
 
 BOOST_AUTO_TEST_CASE( poll_test ){
-    Publisher pub("tcp://localhost:8888");
-    Subscriber sub("tcp://*:8888");
+    Publisher pub("test/poller_test");
+    Subscriber sub("test/poller_test");
     
     pub.start();
     sub.start();

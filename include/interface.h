@@ -5,6 +5,7 @@
 #ifndef _BLUEJAY_COMMUNICATION_INTERFACE_H
 #define _BLUEJAY_COMMUNICATION_INTERFACE_H
 
+#define BJCOMM_COMMON_PATH std::string("/tmp/bluejay/")
 #define BJCOMM_IO_THREADS 1
 
 #include <string>
