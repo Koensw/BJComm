@@ -3,9 +3,11 @@
  */
 package nl.bluejayeindhoven.bjcomm;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
-import java.nio.charset.StandardCharsets;
 
 import nl.bluejayeindhoven.bjcomm.Message;
 import nl.bluejayeindhoven.bjcomm.CommunicationError;

@@ -3,8 +3,6 @@
  */
 package nl.bluejayeindhoven.bjcomm;
 
-import java.io.File;
-
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
 
