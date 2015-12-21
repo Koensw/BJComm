@@ -43,9 +43,7 @@ public class Publisher extends CommunicationInterface{
         
         socket = context.socket(ZMQ.PUB);
         
-        try{
-			new File(COMMON_PATH+address).mkdirs();
-			
+        try{			
             socket.connect("ipc://"+COMMON_PATH+address);
         }catch(ZMQException e){
             socket.close();

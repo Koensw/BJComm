@@ -29,8 +29,8 @@ bool Subscriber::start(){
     //try to bind socket and set options
     try{
         //create path to directory if does not exists
-		path comm_path(BJCOMM_COMMON_PATH+_address);
-		create_directories(comm_path.parent_path());
+        path comm_path(BJCOMM_COMMON_PATH+_address);
+        create_directories(comm_path.parent_path());
         
         //bind socket
         _socket->bind(("ipc://"+comm_path.string()).c_str());

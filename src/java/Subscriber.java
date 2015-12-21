@@ -43,6 +43,10 @@ public class Subscriber extends CommunicationInterface{
         socket = context.socket(ZMQ.SUB);
         
         try{
+            //create file if not exists
+            new File(COMMON_PATH+address).mkdirs();
+        
+            //bind socket
             socket.bind("ipc://"+COMMON_PATH+address);
             
             //FIXME: currently binding to all sockets
