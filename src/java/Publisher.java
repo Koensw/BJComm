@@ -3,6 +3,8 @@
  */
 package nl.bluejayeindhoven.bjcomm;
 
+import java.io.File;
+
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
 
@@ -27,7 +29,7 @@ public class Publisher extends CommunicationInterface{
      * @param address address of the socket
      */
     public Publisher(String address){
-        this.address = COMMON_PATH+address;
+        this.address = address;
     }
     
     /**
@@ -42,7 +44,9 @@ public class Publisher extends CommunicationInterface{
         socket = context.socket(ZMQ.PUB);
         
         try{
-            socket.connect(address);
+			new File(COMMON_PATH+address).mkdirs();
+			
+            socket.connect("ipc://"+COMMON_PATH+address);
         }catch(ZMQException e){
             socket.close();
             socket = null;

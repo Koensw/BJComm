@@ -5,6 +5,7 @@
 
 #include <zmq.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 #include <sys/stat.h>
 #include <libgen.h>
@@ -14,6 +15,7 @@
 
 using namespace bjcomm;
 using namespace boost::algorithm;
+using namespace boost::filesystem;
 
 Subscriber::Subscriber(std::string address): 
     _address(address) {}
@@ -26,14 +28,12 @@ bool Subscriber::start(){
     
     //try to bind socket and set options
     try{
-        //create path to directory (and ONE subdirectory) if does not exists
-        mkdir(BJCOMM_COMMON_PATH.c_str(), S_IRWXU | S_IRWXG | S_IXOTH);
-        std::string address = _address;
-        std::string total_path = BJCOMM_COMMON_PATH+dirname((char *) address.c_str());
-        mkdir(total_path.c_str(), S_IRWXU | S_IRWXG | S_IXOTH);
+        //create path to directory if does not exists
+		path comm_path(BJCOMM_COMMON_PATH+_address);
+		create_directories(comm_path.parent_path());
         
         //bind socket
-        _socket->bind(("ipc://"+BJCOMM_COMMON_PATH+_address).c_str());
+        _socket->bind(("ipc://"+comm_path.string()).c_str());
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);

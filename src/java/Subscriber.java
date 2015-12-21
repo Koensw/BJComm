@@ -43,7 +43,7 @@ public class Subscriber extends CommunicationInterface{
         socket = context.socket(ZMQ.SUB);
         
         try{
-            socket.bind(address);
+            socket.bind("ipc://"+COMMON_PATH+address);
             
             //FIXME: currently binding to all sockets
             socket.subscribe(new byte[0]);
