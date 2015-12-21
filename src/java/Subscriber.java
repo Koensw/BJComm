@@ -27,7 +27,7 @@ public class Subscriber extends CommunicationInterface{
     /**
      * Constructs a subscriber that shall communicate over the supplied address
      *
-     * @param address address of the socket
+     * @param address address of the channel
      */
     public Subscriber(String address){
         this.address = COMMON_PATH+address;

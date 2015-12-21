@@ -7,7 +7,7 @@ class Test
 {
     public static void main (String [] args)
     {
-        Subscriber sub = new Subscriber("tcp://*:5556");
+        Subscriber sub = new Subscriber("test/test_java");
         
         boolean ret = sub.start();
         

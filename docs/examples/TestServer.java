@@ -8,7 +8,7 @@ class TestServer
 {
     public static void main (String [] args)
     {
-        Publisher pub = new Publisher("tcp://localhost:5556");
+        Publisher pub = new Publisher("test/test_java");
         boolean ret = pub.start();
         
         System.out.print("Started ");
