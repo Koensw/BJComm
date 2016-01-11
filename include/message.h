@@ -19,6 +19,10 @@ namespace bjcomm{
         /* Destruct a message */
         ~Message();
         
+        /* Copy behaviour */
+        Message(const Message &msg);
+        Message &operator=(const Message &msg);
+        
         /* Set the type */
         void setType(std::string);
         std::string getType();
@@ -28,7 +32,7 @@ namespace bjcomm{
         std::string getData();
         
         /* Return a stream to read the data */
-        std::stringstream &getStream();
+        std::istringstream &getStream();
         
         void clear();
     private:
@@ -36,7 +40,7 @@ namespace bjcomm{
         std::string _data;
         
         //FIXME: temporarily solution as long as G++-4.9 does not support stringstream move
-        std::stringstream *_stream_saver;
+        std::istringstream *_stream_saver;
     };
 }
     

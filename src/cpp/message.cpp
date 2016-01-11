@@ -5,6 +5,8 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <iostream>
+
 using namespace bjcomm;
 using namespace boost::algorithm;
 
@@ -30,6 +32,20 @@ Message::~Message(){
     delete _stream_saver;
 }    
 
+Message::Message(const Message &msg): _type(msg._type), _data(msg._data) {
+    delete _stream_saver;
+    _stream_saver = new std::istringstream(_data);
+}
+
+Message &Message::operator=(const Message &msg){
+    if (this == &msg) return *this; 
+    delete _stream_saver;
+    _type = msg._type;
+    _data = msg._data;
+    _stream_saver = new std::istringstream(_data);
+    return *this;
+}
+
 void Message::setType(std::string type){
     trim(type);
     if(type.empty()) type = "default";
@@ -49,9 +65,9 @@ std::string Message::getData(){
     return _data;
 }
 
-std::stringstream &Message::getStream(){
+std::istringstream &Message::getStream(){
     delete _stream_saver;
-    _stream_saver  = new std::stringstream(_data);
+    _stream_saver  = new std::istringstream(_data);
     return *_stream_saver;
 }
 

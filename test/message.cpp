@@ -1,4 +1,5 @@
 #define BOOST_TEST_MODULE Message
+#include <iostream>
 #include <boost/test/unit_test.hpp>
 
 #include "message.h"
@@ -81,6 +82,10 @@ BOOST_AUTO_TEST_CASE( stream_test ){
     std::string data;
     msg.getStream() >> data;
     BOOST_CHECK_EQUAL(data, "test");
+    
+    msg = Message("test_new");
+    msg.setData("copy");
+    BOOST_CHECK_EQUAL(msg.getData(), "copy");
 }
 
 // EOF
