@@ -21,7 +21,7 @@ namespace bjcomm{
         bool start();
         
         /* Send a message */
-        void send(Message &msg);
+        void send(const Message &msg);
     private:
         std::string _address;
     };

@@ -52,7 +52,7 @@ void Message::setType(std::string type){
     _type = type;
 }
 
-std::string Message::getType(){
+std::string Message::getType() const{
     return _type;
 }    
     
@@ -61,7 +61,7 @@ void Message::setData(std::string data){
     _data = data;
 }
 
-std::string Message::getData(){
+std::string Message::getData() const{
     return _data;
 }
 

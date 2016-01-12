@@ -34,7 +34,7 @@ bool Publisher::start(){
     return true;
 }
 
-void Publisher::send(Message &msg){
+void Publisher::send(const Message &msg){
     //throw exception if trying to publish on closed channel
     if(!_running) throw CommunicationError("Trying to send message on channel that is not running!");
         

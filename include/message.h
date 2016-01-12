@@ -25,11 +25,11 @@ namespace bjcomm{
         
         /* Set the type */
         void setType(std::string);
-        std::string getType();
+        std::string getType() const;
         
         /* Set the data */
         void setData(std::string);
-        std::string getData();
+        std::string getData() const;
         
         /* Return a stream to read the data */
         std::istringstream &getStream();
