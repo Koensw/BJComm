@@ -11,38 +11,31 @@ using namespace bjcomm;
 using namespace boost::algorithm;
 
 Message::Message():
-    _type("default"), _data(""), _stream_saver(0) {}
+    _type("default"), _data("") {}
 
 Message::Message(std::string type):
-    _type(type), _data(""), _stream_saver(0)
+    _type(type), _data("")
 {
     trim(_type);
     if(_type.empty()) _type = "default";
 }
 
 Message::Message(std::string type, std::string data): 
-    _type(type), _data(data), _stream_saver(0)
+    _type(type), _data(data)
 {
     trim(_type);
     if(_type.empty()) _type = "default";
     trim(_data);
 }
     
-Message::~Message(){
-    delete _stream_saver;
-}    
+Message::~Message(){}
 
-Message::Message(const Message &msg): _type(msg._type), _data(msg._data) {
-    delete _stream_saver;
-    _stream_saver = new std::istringstream(_data);
-}
+Message::Message(const Message &msg): _type(msg._type), _data(msg._data) {}
 
-Message &Message::operator=(const Message &msg){
+Message &Message::operator=(const Message &msg) {
     if (this == &msg) return *this; 
-    delete _stream_saver;
     _type = msg._type;
     _data = msg._data;
-    _stream_saver = new std::istringstream(_data);
     return *this;
 }
 
@@ -66,9 +59,10 @@ std::string Message::getData() const{
 }
 
 std::istringstream &Message::getStream(){
-    delete _stream_saver;
-    _stream_saver  = new std::istringstream(_data);
-    return *_stream_saver;
+    //cannot pass direct copy because of gcc bug
+    _stream_saver.clear();
+    _stream_saver.str(_data);
+    return _stream_saver;
 }
 
 void Message::clear(){

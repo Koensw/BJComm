@@ -40,7 +40,7 @@ namespace bjcomm{
         std::string _data;
         
         //FIXME: temporarily solution as long as G++-4.9 does not support stringstream move
-        std::istringstream *_stream_saver;
+        std::istringstream _stream_saver;
     };
 }
     
