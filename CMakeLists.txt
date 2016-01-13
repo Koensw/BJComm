@@ -4,7 +4,12 @@ project(bjcomm)
 # load required packages
 find_package(Java REQUIRED)
 find_package(Boost COMPONENTS system filesystem unit_test_framework REQUIRED)
+include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 include(UseJava)
+
+find_path(ZMQ_INCLUDE_DIR NAMES zmq.hpp PATHS /usr/include /usr/local/include)
+include_directories(${ZMQ_INCLUDE_DIR})
+find_library(ZMQ_LIBRARY libzmq.so)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     execute_process(
@@ -35,7 +40,7 @@ add_library(bjcomm SHARED
     src/cpp/publisher.cpp
     src/cpp/poller.cpp
 )
-target_link_libraries(bjcomm ${Boost_FILESYSTEM_LIBRARY} zmq)
+target_link_libraries(bjcomm ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${ZMQ_LIBRARY})
 
 # communication bindings for java
 set(CMAKE_JAVA_INCLUDE_PATH /usr/local/share/java/zmq.jar)
@@ -110,7 +115,6 @@ create_javadoc(bjcomm_docs
     src/java/CommunicationError.java
     SOURCEPATH "${CMAKE_CURRENT_SOURCE_DIR}/src/java/"
     CLASSPATH "${CMAKE_JAVA_INCLUDE_PATH}"
-    INSTALLPATH "${CMAKE_CURRENT_BINARY_DIR}/"
 )
 
 #### INSTALL ####
