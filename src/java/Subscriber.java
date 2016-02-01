@@ -51,10 +51,13 @@ public class Subscriber extends CommunicationInterface{
             file.setReadable(true, false);
             file.setWritable(true, false);
             file.setExecutable(true, false);
-            File common_path = new File(COMMON_PATH);
-            common_path.setReadable(true, false);
-            common_path.setWritable(true, false);
-            boolean check = common_path.setExecutable(true, false);
+            
+            try{
+                File common_path = new File(COMMON_PATH);
+                common_path.setReadable(true, false);
+                common_path.setWritable(true, false);
+                boolean check = common_path.setExecutable(true, false);
+            }catch(SecurityException e){}
         
             //bind socket
             socket.bind("ipc://"+COMMON_PATH+address);

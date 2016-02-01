@@ -35,9 +35,12 @@ bool Subscriber::start(){
         //bind socket
         _socket->bind(("ipc://"+comm_path.string()).c_str());
         
-        //set permissions
-        permissions(BJCOMM_COMMON_PATH, perms::owner_all | perms::group_all | perms::others_all);
-        permissions(comm_path, perms::owner_all | perms::group_all | perms::others_all);
+        //try to set permissions
+        try{
+            permissions(BJCOMM_COMMON_PATH, perms::owner_all | perms::group_all | perms::others_all);
+            permissions(comm_path.parent_path(), perms::owner_all | perms::group_all | perms::others_all);
+            permissions(comm_path, perms::owner_all | perms::group_all | perms::others_all);
+        }catch(filesystem_error){}
 
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);
