@@ -103,6 +103,7 @@ add_cpp_test(message_test test/message.cpp)
 add_cpp_test(subscriber_test test/subscriber.cpp)
 add_cpp_test(publisher_test test/publisher.cpp)
 add_cpp_test(poller_test test/poller.cpp)
+add_cpp_test(generator test/generator.cpp)
 
 # (re)build docs
 create_javadoc(bjcomm_docs
