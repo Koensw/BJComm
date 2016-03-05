@@ -47,16 +47,18 @@ public class Subscriber extends CommunicationInterface{
         try{
             //create file if not exists
             File file = new File(COMMON_PATH+address);
-            file.getParentFile().mkdirs();
-            file.setReadable(true, false);
-            file.setWritable(true, false);
-            file.setExecutable(true, false);
             
             try{
-                File common_path = new File(COMMON_PATH);
-                common_path.setReadable(true, false);
-                common_path.setWritable(true, false);
-                boolean check = common_path.setExecutable(true, false);
+                file.getParentFile().mkdirs();
+                
+                file = file.getParentFile();
+                while(file.toString().length() >= COMMON_PATH.length()-1){
+                    file.setReadable(true, false);
+                    file.setWritable(true, false);
+                    file.setExecutable(true, false);
+                    
+                    file = file.getParentFile();
+                }
             }catch(SecurityException e){}
         
             //bind socket

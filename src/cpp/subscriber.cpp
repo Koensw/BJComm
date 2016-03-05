@@ -30,18 +30,22 @@ bool Subscriber::start(){
     try{
         //create path to directory if does not exists
         path comm_path(BJCOMM_COMMON_PATH+_address);
-        create_directories(comm_path.parent_path());
-        
-        //bind socket
-        _socket->bind(("ipc://"+comm_path.string()).c_str());
+       
         
         //try to set permissions
         try{
-            permissions(BJCOMM_COMMON_PATH, perms::owner_all | perms::group_all | perms::others_all);
-            permissions(comm_path.parent_path(), perms::owner_all | perms::group_all | perms::others_all);
-            permissions(comm_path, perms::owner_all | perms::group_all | perms::others_all);
+            path parent_path = comm_path.parent_path();
+            create_directories(parent_path);
+            
+            while(parent_path.string().size() >= BJCOMM_COMMON_PATH.size()-1){
+                permissions(parent_path, perms::owner_all | perms::group_all | perms::others_all);
+                parent_path = parent_path.parent_path();
+            }
         }catch(filesystem_error){}
 
+        //bind socket
+        _socket->bind(("ipc://"+comm_path.string()).c_str());
+        
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);
     }catch(zmq::error_t &e){
