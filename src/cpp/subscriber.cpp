@@ -31,7 +31,6 @@ bool Subscriber::start(){
         //create path to directory if does not exists
         path comm_path(BJCOMM_COMMON_PATH+_address);
        
-        
         //try to set permissions
         try{
             path parent_path = comm_path.parent_path();
@@ -45,6 +44,9 @@ bool Subscriber::start(){
 
         //bind socket
         _socket->bind(("ipc://"+comm_path.string()).c_str());
+        try{
+            permissions(comm_path, perms::owner_all | perms::group_all | perms::others_all);
+        }catch(filesystem_error){}
         
         //FIXME: bind to all sockets, later add possibility to define message types and ignore others
         _socket->setsockopt(ZMQ_SUBSCRIBE, "", 0);

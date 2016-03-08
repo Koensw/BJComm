@@ -51,18 +51,24 @@ public class Subscriber extends CommunicationInterface{
             try{
                 file.getParentFile().mkdirs();
                 
-                file = file.getParentFile();
-                while(file.toString().length() >= COMMON_PATH.length()-1){
-                    file.setReadable(true, false);
-                    file.setWritable(true, false);
-                    file.setExecutable(true, false);
+                File parentFile = file.getParentFile();
+                while(parentFile.toString().length() >= COMMON_PATH.length()-1){
+                    parentFile.setReadable(true, false);
+                    parentFile.setWritable(true, false);
+                    parentFile.setExecutable(true, false);
                     
-                    file = file.getParentFile();
+                    parentFile = parentFile.getParentFile();
                 }
             }catch(SecurityException e){}
         
             //bind socket
             socket.bind("ipc://"+COMMON_PATH+address);
+            
+            try{
+                file.setReadable(true, false);
+                file.setWritable(true, false);
+                file.setExecutable(true, false);
+            }catch(SecurityException e){}
             
             //FIXME: currently binding to all sockets
             socket.subscribe(new byte[0]);
